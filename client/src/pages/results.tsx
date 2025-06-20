@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import ResultScreenshot from "@/components/ResultScreenshot";
-import { personalityTypes } from "@/lib/personality-types";
+import { getPersonalityType, getAllPersonalityTypes } from "@/lib/personality-types-multilang";
 import { useLanguage } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import type { TestSession } from "@shared/schema";
@@ -13,7 +13,7 @@ export default function Results() {
   // Use window.location.search for more reliable query parameter parsing
   const searchParams = new URLSearchParams(window.location.search);
   const sessionId = searchParams.get('session');
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   
   console.log('Results page - search:', window.location.search, 'sessionId:', sessionId);
 
@@ -28,7 +28,7 @@ export default function Results() {
   const handleShare = async () => {
     if (!session) return;
     
-    const personalityType = personalityTypes[session.personalityType];
+    const personalityType = getPersonalityType(session.personalityType, language);
     const shareText = t('share.text').replace('{type}', personalityType.title);
     
     if (navigator.share) {
@@ -83,9 +83,9 @@ export default function Results() {
     );
   }
 
-  const personalityType = personalityTypes[session.personalityType];
+  const personalityType = getPersonalityType(session.personalityType, language);
 
-  if (!personalityType) {
+  if (!personalityType || personalityType.title === "Unknown Type") {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
         <div className="text-center">
@@ -102,7 +102,8 @@ export default function Results() {
     );
   }
 
-  const otherTypes = Object.values(personalityTypes)
+  const allTypes = getAllPersonalityTypes(language);
+  const otherTypes = Object.values(allTypes)
     .filter(type => type.code !== session.personalityType)
     .slice(0, 4);
 

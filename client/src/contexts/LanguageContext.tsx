@@ -59,6 +59,9 @@ const translations = {
     'results.save.image': '이미지로 저장',
     'image.save.error': '이미지 저장에 실패했습니다. 다시 시도해주세요.',
     
+    // Results page actions
+    'results.restart': '다시 테스트하기',
+    
     // Footer
     'footer.copyright': '© 2024 테토-에겐 성격 유형 테스트. All rights reserved.',
     'footer.purpose': '이 테스트는 교육 및 자기 이해 목적으로 제공됩니다.',
