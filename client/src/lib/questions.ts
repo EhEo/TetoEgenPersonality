@@ -1,6 +1,16 @@
 import type { Question } from "@shared/schema";
 
-export const questions: Question[] = [
+// Fisher-Yates shuffle algorithm
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+export const baseQuestions: Question[] = [
   {
     id: 1,
     text: "친구들과 함께 있을 때 당신은 어떤 역할을 주로 하나요?",
@@ -202,3 +212,11 @@ export const questions: Question[] = [
     ]
   }
 ];
+
+// Generate shuffled questions with randomized options
+export function getShuffledQuestions(): Question[] {
+  return baseQuestions.map(question => ({
+    ...question,
+    options: shuffleArray(question.options)
+  }));
+}

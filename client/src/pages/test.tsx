@@ -2,13 +2,14 @@ import { useState } from "react";
 import { useLocation } from "wouter";
 import ProgressBar from "@/components/progress-bar";
 import QuestionCard from "@/components/question-card";
-import { questions } from "@/lib/questions";
+import { getShuffledQuestions } from "@/lib/questions";
 import { calculatePersonalityType } from "@/lib/personality-types";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import type { InsertTestSession } from "@shared/schema";
 
 export default function Test() {
+  const [questions] = useState(() => getShuffledQuestions());
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
   const [, setLocation] = useLocation();
