@@ -9,9 +9,15 @@ import type { TestSession } from "@shared/schema";
 
 export default function Results() {
   const [location, setLocation] = useLocation();
-  const searchParams = new URLSearchParams(location.split('?')[1] || '');
+  
+  // More robust URL parsing
+  const urlParts = location.split('?');
+  const queryString = urlParts.length > 1 ? urlParts[1] : '';
+  const searchParams = new URLSearchParams(queryString);
   const sessionId = searchParams.get('session');
   const { t } = useLanguage();
+  
+  console.log('Results page - location:', location, 'sessionId:', sessionId);
 
   const { data: session, isLoading, error } = useQuery<TestSession>({
     queryKey: [`/api/test-sessions/${sessionId}`],
@@ -19,10 +25,16 @@ export default function Results() {
   });
 
   useEffect(() => {
-    if (!sessionId) {
-      setLocation('/');
-    }
-  }, [sessionId, setLocation]);
+    // Add delay to allow proper URL parsing
+    const timer = setTimeout(() => {
+      if (!sessionId && location.includes('/results')) {
+        console.log('No session ID found after delay, redirecting to home');
+        setLocation('/');
+      }
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, [sessionId, setLocation, location]);
 
   const handleShare = async () => {
     if (!session) return;

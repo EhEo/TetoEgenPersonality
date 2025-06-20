@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import ProgressBar from "@/components/progress-bar";
 import QuestionCard from "@/components/question-card";
@@ -12,11 +12,16 @@ import type { InsertTestSession } from "@shared/schema";
 
 export default function Test() {
   const { language } = useLanguage();
-  const [questions] = useState(() => getShuffledQuestions(language));
+  const [questions, setQuestions] = useState(() => getShuffledQuestions(language));
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
   const [, setLocation] = useLocation();
   const { t } = useLanguage();
+
+  // Update questions when language changes
+  useEffect(() => {
+    setQuestions(getShuffledQuestions(language));
+  }, [language]);
 
   const saveResultMutation = useMutation({
     mutationFn: async (data: InsertTestSession) => {
@@ -24,8 +29,8 @@ export default function Test() {
       return response.json();
     },
     onSuccess: (session) => {
-      // Use replace to prevent going back to test page
-      window.history.replaceState(null, '', `/results?session=${session.id}`);
+      console.log('Test completed, session created:', session);
+      // Navigate to results page with session ID
       setLocation(`/results?session=${session.id}`);
     }
   });
