@@ -6,6 +6,8 @@ import { getShuffledQuestions } from "@/lib/questions";
 import { calculatePersonalityType } from "@/lib/personality-types";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
+import { useLanguage } from "@/contexts/LanguageContext";
+import Header from "@/components/Header";
 import type { InsertTestSession } from "@shared/schema";
 
 export default function Test() {
@@ -13,6 +15,7 @@ export default function Test() {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
   const [, setLocation] = useLocation();
+  const { t } = useLanguage();
 
   const saveResultMutation = useMutation({
     mutationFn: async (data: InsertTestSession) => {
@@ -58,26 +61,19 @@ export default function Test() {
 
   if (saveResultMutation.isPending) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">결과를 계산하고 있습니다...</h2>
-          <p className="text-gray-600">잠시만 기다려주세요</p>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">{t('test.calculating')}</h2>
+          <p className="text-gray-600 dark:text-gray-300">{t('test.wait')}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
-      <header className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-4xl mx-auto px-4 py-6">
-          <div className="text-center">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">테토-에겐 성격 유형 테스트</h1>
-            <p className="text-gray-600">나만의 독특한 성격 유형을 발견해보세요</p>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-gray-800">
+      <Header />
 
       <main className="max-w-4xl mx-auto px-4 py-8">
         <ProgressBar current={currentQuestion + 1} total={questions.length} />
