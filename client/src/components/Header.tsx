@@ -22,18 +22,18 @@ export default function Header() {
 
   return (
     <header className="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-700">
-      <div className="max-w-4xl mx-auto px-4 py-6">
-        <div className="flex items-center justify-between">
+      <div className="max-w-4xl mx-auto px-4 py-4 sm:py-6">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-center flex-1">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2">
               {t('app.title')}
             </h1>
-            <p className="text-gray-600 dark:text-gray-300">
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">
               {t('app.subtitle')}
             </p>
           </div>
           
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 shrink-0">
             {/* Language Selector */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
