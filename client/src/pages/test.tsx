@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useLocation } from "wouter";
 import ProgressBar from "@/components/progress-bar";
 import QuestionCard from "@/components/question-card";
-import { getShuffledQuestions } from "@/lib/questions";
+import { getShuffledQuestions } from "@/lib/questions-multilang";
 import { calculatePersonalityType } from "@/lib/personality-types";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
@@ -11,7 +11,8 @@ import Header from "@/components/Header";
 import type { InsertTestSession } from "@shared/schema";
 
 export default function Test() {
-  const [questions] = useState(() => getShuffledQuestions());
+  const { language } = useLanguage();
+  const [questions] = useState(() => getShuffledQuestions(language));
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
   const [, setLocation] = useLocation();
@@ -23,6 +24,8 @@ export default function Test() {
       return response.json();
     },
     onSuccess: (session) => {
+      // Use replace to prevent going back to test page
+      window.history.replaceState(null, '', `/results?session=${session.id}`);
       setLocation(`/results?session=${session.id}`);
     }
   });

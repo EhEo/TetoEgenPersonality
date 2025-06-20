@@ -34,7 +34,8 @@ export default function ResultScreenshot({ personalityType, onShare, onRestart }
       link.click();
     } catch (error) {
       console.error('Failed to save image:', error);
-      alert('이미지 저장에 실패했습니다. 다시 시도해주세요.');
+      const errorMessage = t('image.save.error') || 'Failed to save image. Please try again.';
+      alert(errorMessage);
     }
   };
 
@@ -101,7 +102,7 @@ export default function ResultScreenshot({ personalityType, onShare, onRestart }
             className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-8 rounded-full flex items-center gap-2"
           >
             <Camera className="w-4 h-4" />
-            이미지로 저장
+            {t('results.save.image')}
           </Button>
           <Button 
             onClick={onShare}

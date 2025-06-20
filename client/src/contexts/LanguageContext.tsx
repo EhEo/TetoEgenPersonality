@@ -55,6 +55,10 @@ const translations = {
     'share.text': '나는 {type} 유형입니다! 테토-에겐 성격 유형 테스트를 해보세요.',
     'share.copied': '결과가 클립보드에 복사되었습니다!',
     
+    // Image Save
+    'results.save.image': '이미지로 저장',
+    'image.save.error': '이미지 저장에 실패했습니다. 다시 시도해주세요.',
+    
     // Footer
     'footer.copyright': '© 2024 테토-에겐 성격 유형 테스트. All rights reserved.',
     'footer.purpose': '이 테스트는 교육 및 자기 이해 목적으로 제공됩니다.',
@@ -114,6 +118,10 @@ const translations = {
     'share.text': 'I am a {type} type! Try the Teto-Egen Personality Type Test.',
     'share.copied': 'Results copied to clipboard!',
     
+    // Image Save
+    'results.save.image': 'Save as Image',
+    'image.save.error': 'Failed to save image. Please try again.',
+    
     // Footer
     'footer.copyright': '© 2024 Teto-Egen Personality Type Test. All rights reserved.',
     'footer.purpose': 'This test is provided for educational and self-understanding purposes.',
@@ -172,6 +180,10 @@ const translations = {
     // Share
     'share.text': '我是 {type} 类型！来试试 Teto-Egen 性格类型测试吧。',
     'share.copied': '结果已复制到剪贴板！',
+    
+    // Image Save
+    'results.save.image': '保存为图片',
+    'image.save.error': '图片保存失败，请重试。',
     
     // Footer
     'footer.copyright': '© 2024 Teto-Egen 性格类型测试。保留所有权利。',
