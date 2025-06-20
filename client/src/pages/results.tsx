@@ -1,14 +1,17 @@
 import { useEffect } from "react";
 import { useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import ResultCard from "@/components/result-card";
+import ResultScreenshot from "@/components/ResultScreenshot";
 import { personalityTypes } from "@/lib/personality-types";
+import { useLanguage } from "@/contexts/LanguageContext";
+import Header from "@/components/Header";
 import type { TestSession } from "@shared/schema";
 
 export default function Results() {
   const [location, setLocation] = useLocation();
   const searchParams = new URLSearchParams(location.split('?')[1] || '');
   const sessionId = searchParams.get('session');
+  const { t } = useLanguage();
 
   const { data: session, isLoading, error } = useQuery<TestSession>({
     queryKey: [`/api/test-sessions/${sessionId}`],
