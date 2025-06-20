@@ -30,8 +30,10 @@ export default function Test() {
     },
     onSuccess: (session) => {
       console.log('Test completed, session created:', session);
-      // Navigate to results page with session ID
-      setLocation(`/results?session=${session.id}`);
+      // Use pushState to ensure URL is properly set
+      const resultUrl = `/results?session=${session.id}`;
+      window.history.pushState(null, '', resultUrl);
+      setLocation(resultUrl);
     }
   });
 

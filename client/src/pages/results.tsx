@@ -8,33 +8,22 @@ import Header from "@/components/Header";
 import type { TestSession } from "@shared/schema";
 
 export default function Results() {
-  const [location, setLocation] = useLocation();
+  const [, setLocation] = useLocation();
   
-  // More robust URL parsing
-  const urlParts = location.split('?');
-  const queryString = urlParts.length > 1 ? urlParts[1] : '';
-  const searchParams = new URLSearchParams(queryString);
+  // Use window.location.search for more reliable query parameter parsing
+  const searchParams = new URLSearchParams(window.location.search);
   const sessionId = searchParams.get('session');
   const { t } = useLanguage();
   
-  console.log('Results page - location:', location, 'sessionId:', sessionId);
+  console.log('Results page - search:', window.location.search, 'sessionId:', sessionId);
 
   const { data: session, isLoading, error } = useQuery<TestSession>({
     queryKey: [`/api/test-sessions/${sessionId}`],
     enabled: !!sessionId
   });
 
-  useEffect(() => {
-    // Add delay to allow proper URL parsing
-    const timer = setTimeout(() => {
-      if (!sessionId && location.includes('/results')) {
-        console.log('No session ID found after delay, redirecting to home');
-        setLocation('/');
-      }
-    }, 100);
-    
-    return () => clearTimeout(timer);
-  }, [sessionId, setLocation, location]);
+  // Remove the auto-redirect entirely - let user stay on results page
+  // even if session ID is missing to debug the issue
 
   const handleShare = async () => {
     if (!session) return;
