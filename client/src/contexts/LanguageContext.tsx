@@ -244,6 +244,10 @@ const translations = {
     'share.text': 'Tôi là loại hình {type}! Hãy thử bài kiểm tra loại hình tính cách Teto-Egen.',
     'share.copied': 'Kết quả đã được sao chép vào clipboard!',
     
+    // Image Save
+    'results.save.image': 'Lưu thành hình ảnh',
+    'image.save.error': 'Lưu hình ảnh thất bại. Vui lòng thử lại.',
+    
     // Footer
     'footer.copyright': '© 2024 Bài kiểm tra loại hình tính cách Teto-Egen. Đã đăng ký bản quyền.',
     'footer.purpose': 'Bài kiểm tra này được cung cấp cho mục đích giáo dục và tự hiểu biết.',
